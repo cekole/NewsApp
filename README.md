@@ -1,4 +1,4 @@
-# servislet_case
+# news_app
 
 A new Flutter project.
 
