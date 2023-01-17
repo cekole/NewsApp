@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:servislet_case/screens/home/home_page.dart';
 import 'package:servislet_case/screens/new_detail.dart';
 import 'package:servislet_case/screens/splash/splash_screen.dart';
+import 'package:servislet_case/screens/web_view.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/home': (context) => const HomePage(),
         '/detail': (context) => const NewDetail(),
+        '/webview': (context) => const WebView(),
       },
     );
   }

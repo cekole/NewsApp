@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:servislet_case/controllers/news_controller.dart';
 import 'package:servislet_case/models/new.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class NewDetail extends StatelessWidget {
   const NewDetail({super.key});
@@ -74,7 +75,46 @@ class NewDetail extends StatelessWidget {
                       ),
                     ),
                     onPressed: (() {
-                      launchUrl(Uri.parse(selectedNew.url));
+                      late final WebViewController _controller =
+                          WebViewController();
+                      _controller
+                        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                        ..setBackgroundColor(const Color(0x00000000))
+                        ..setNavigationDelegate(
+                          NavigationDelegate(
+                            onProgress: (int progress) {
+                              print('Sayfa Yükleniyor: $progress');
+                            },
+                            onPageStarted: (String url) {},
+                            onPageFinished: (String url) {},
+                            onWebResourceError: (WebResourceError error) {
+                              // Show error dialog.
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Sayfa Yüklenemedi'),
+                                      content: Text(error.description),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('Tamam'),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            onNavigationRequest: (NavigationRequest request) {
+                              return NavigationDecision.navigate;
+                            },
+                          ),
+                        )
+                        ..loadRequest(Uri.parse(selectedNew.url));
+                      Navigator.of(context)
+                          .pushNamed('/webview', arguments: _controller);
+                      //launchUrl(Uri.parse(selectedNew.url));
                     }),
                     icon: Icon(
                       Icons.open_in_browser,

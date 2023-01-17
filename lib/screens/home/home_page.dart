@@ -26,7 +26,6 @@ class HomePage extends StatelessWidget {
               future: newsController.fetchNews(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  //shimmer effect
                   return ListView.separated(
                     itemCount: 10,
                     separatorBuilder: (context, index) {
