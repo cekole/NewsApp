@@ -14,17 +14,19 @@ class NewsController extends GetxController {
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body)['articles'];
       final List<New> loadedNews = [];
-      data.forEach((element) {
-        loadedNews.add(New(
-          title: element['title'],
-          description: element['description'],
-          url: element['url'],
-          urlToImage: element['urlToImage'],
-          content: element['content'],
-          publishedAt: element['publishedAt'],
-        ));
+      for (var element in data) {
+        loadedNews.add(
+          New(
+            title: element['title'],
+            description: element['description'],
+            url: element['url'],
+            urlToImage: element['urlToImage'],
+            content: element['content'] ?? '',
+            publishedAt: element['publishedAt'],
+          ),
+        );
         news.assignAll(loadedNews);
-      });
+      }
     } else {
       throw Exception('Failed to load news');
     }
