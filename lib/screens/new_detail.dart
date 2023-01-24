@@ -69,65 +69,50 @@ class NewDetail extends StatelessWidget {
                   ],
                 ),
                 ElevatedButton.icon(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.blue[50],
-                      ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Colors.blue[50],
                     ),
-                    onPressed: (() {
-                      late final WebViewController _controller =
-                          WebViewController();
-                      _controller
-                        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                        ..setBackgroundColor(const Color(0x00000000))
-                        ..setNavigationDelegate(
-                          NavigationDelegate(
-                            onProgress: (int progress) {
-                              print('Sayfa Yükleniyor: $progress');
-                            },
-                            onPageStarted: (String url) {},
-                            onPageFinished: (String url) {},
-                            onWebResourceError: (WebResourceError error) {
-                              // Show error dialog.
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Sayfa Yüklenemedi'),
-                                      content: Text(error.description),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('Tamam'),
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            onNavigationRequest: (NavigationRequest request) {
-                              return NavigationDecision.navigate;
-                            },
-                          ),
-                        )
-                        ..loadRequest(Uri.parse(selectedNew.url));
-                      Navigator.of(context)
-                          .pushNamed('/webview', arguments: _controller);
-                      //launchUrl(Uri.parse(selectedNew.url));
-                    }),
-                    icon: Icon(
-                      Icons.open_in_browser,
+                  ),
+                  onPressed: (() {
+                    late final WebViewController _controller =
+                        WebViewController();
+                    _controller
+                      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                      ..setBackgroundColor(const Color(0x00000000))
+                      ..setNavigationDelegate(
+                        NavigationDelegate(
+                          onProgress: (int progress) {
+                            print('Sayfa Yükleniyor: $progress');
+                          },
+                          onPageStarted: (String url) {},
+                          onPageFinished: (String url) {},
+                          onWebResourceError: (WebResourceError error) {
+                            print('Hata: $error');
+                          },
+                          onNavigationRequest: (NavigationRequest request) {
+                            return NavigationDecision.navigate;
+                          },
+                        ),
+                      )
+                      ..loadRequest(Uri.parse(selectedNew.url));
+                    Navigator.of(context)
+                        .pushNamed('/webview', arguments: _controller);
+                    //launchUrl(Uri.parse(selectedNew.url));
+                  }),
+                  icon: Icon(
+                    Icons.open_in_browser,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  label: Text(
+                    'Haber Kaynağına Git',
+                    style: TextStyle(
                       color: Theme.of(context).primaryColor,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
                     ),
-                    label: Text(
-                      'Haber Kaynağına Git',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
+                  ),
+                ),
               ],
             ),
           ],

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:servislet_case/constants/appConstant.dart';
 import 'package:servislet_case/screens/home/home_page.dart';
 import 'package:servislet_case/screens/new_detail.dart';
 import 'package:servislet_case/screens/splash/splash_screen.dart';
@@ -33,11 +34,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xff262c38),
+          backgroundColor: bgColor,
           foregroundColor: Colors.white,
         ),
         primaryColor: Color(0xff262c38),
-        scaffoldBackgroundColor: Color(0xff262c38),
+        scaffoldBackgroundColor: bgColor,
         textTheme: TextTheme(
           bodyText1: TextStyle(color: Colors.white),
         ),
